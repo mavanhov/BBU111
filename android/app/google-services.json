@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "436493392424",
+    "project_id": "lorsoth111-d4bde",
+    "storage_bucket": "lorsoth111-d4bde.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436493392424:android:4d3fcf4bf6ffe13a7bb31d",
+        "android_client_info": {
+          "package_name": "com.example.lorsoth111"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhcXdMu02NdGTSoQBPEuYUjCeIT75vXmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
