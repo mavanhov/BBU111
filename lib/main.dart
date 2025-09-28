@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lorsoth111/app_colors.dart';
 import 'package:lorsoth111/login_user.dart';
 
@@ -8,6 +9,24 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyHomeApp());
+  configLoading();
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = AppColors.white
+    ..backgroundColor = AppColors.bgColor
+    ..indicatorColor = AppColors.white
+    ..textColor = AppColors.white
+    ..maskColor = AppColors.bgColor
+    ..userInteractions = true
+    ..dismissOnTap = false;
+  // ..customAnimation = CustomAnimation();
 }
 
 class MyHomeApp extends StatelessWidget {
@@ -18,6 +37,7 @@ class MyHomeApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BTB111 App',
       home: const LoginUser(), // where to go, startup screen, launcher screen
+      builder: EasyLoading.init(),
       theme: ThemeData.light().copyWith(
         appBarTheme: AppBarTheme(
           backgroundColor: AppColors.bgColor,

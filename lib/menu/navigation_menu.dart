@@ -22,7 +22,7 @@ class NavigationMenu extends StatelessWidget {
         children: <Widget>[
           UserAccountsDrawerHeader(
             accountName: Text('Try Chhunheang'),
-            accountEmail: Text('trychhunheang@gmail.com'),
+            accountEmail: Text('tch@gmail.com'),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset('assets/images/kv1.jpg', fit: BoxFit.cover),

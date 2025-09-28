@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lorsoth111/app_colors.dart';
 
 class SignupUser extends StatefulWidget {
@@ -45,6 +46,8 @@ class _SignupUserState extends State<SignupUser> {
     String password,
   ) async {
     try {
+      EasyLoading.show(status: 'Inserting...');
+      await Future.delayed(Duration(seconds: 1));
       // Create user with Email and Password
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -56,15 +59,11 @@ class _SignupUserState extends State<SignupUser> {
         'email': email,
         'createdAt': DateTime.now(),
       });
+      EasyLoading.showSuccess('Added user successfully.');
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Added user successfully!')));
+      Navigator.pop(context);
     } catch (ex) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $ex')));
+      EasyLoading.showError('Error: $ex');
     }
   }
 
