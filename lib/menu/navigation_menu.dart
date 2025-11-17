@@ -10,29 +10,51 @@ import 'package:lorsoth111/menu/invite_friends.dart';
 import 'package:lorsoth111/menu/my_profile.dart';
 import 'package:lorsoth111/menu/promotion.dart';
 import 'package:lorsoth111/menu/terms_of_use.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class NavigationMenu extends StatelessWidget {
+class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
+
+  @override
+  State<NavigationMenu> createState() => _NavigationMenuState();
+}
+
+class _NavigationMenuState extends State<NavigationMenu> {
+  String? fullname;
+  String? email;
+
+  Future<void> loadData() async {
+    final sp = await SharedPreferences.getInstance();
+    setState(() {
+      fullname = sp.getString("FULLNAME");
+      email = sp.getString("EMAIL");
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text('Try Chhunheang'),
-            accountEmail: Text('tch@gmail.com'),
+            accountName: Text("$fullname"),
+            accountEmail: Text("$email"),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.asset('assets/images/kv1.jpg', fit: BoxFit.cover),
+                child: Image.asset("assets/images/kv1.jpg", fit: BoxFit.cover),
               ),
             ),
             decoration: BoxDecoration(color: AppColors.bgColor),
           ),
           ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('About Us'),
+            title: Text("About Us"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -43,7 +65,7 @@ class NavigationMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.phone_in_talk),
-            title: Text('Contact Us'),
+            title: Text("Contact Us"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -55,7 +77,7 @@ class NavigationMenu extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.notifications),
-            title: Text('Promotion'),
+            title: Text("Promotions"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -66,7 +88,7 @@ class NavigationMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.question_mark),
-            title: Text('FAQs'),
+            title: Text("FAQs"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -77,7 +99,7 @@ class NavigationMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.message),
-            title: Text('Feedback'),
+            title: Text("Feedback"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -88,7 +110,7 @@ class NavigationMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.list_alt),
-            title: Text('Terms of Use'),
+            title: Text("Terms of Use"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -99,7 +121,7 @@ class NavigationMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.share),
-            title: Text('Invite Friends'),
+            title: Text("Invite Friends"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -108,10 +130,9 @@ class NavigationMenu extends StatelessWidget {
               );
             },
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.person),
-            title: Text('My Profile'),
+            title: Text("My Profile"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -122,7 +143,7 @@ class NavigationMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.password),
-            title: Text('Change Password'),
+            title: Text("Change Password"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -133,12 +154,12 @@ class NavigationMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.logout),
-            title: Text('Logout'),
+            title: Text("Logout"),
             onTap: () {
-              Navigator.pushAndRemoveUntil(
+              Navigator.pop(context);
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginUser()),
-                (route) => false,
               );
             },
           ),

@@ -10,6 +10,7 @@ import 'package:lorsoth111/menu/favorite_items.dart';
 import 'package:lorsoth111/menu/navigation_menu.dart';
 import 'package:lorsoth111/menu/new_order.dart';
 import 'package:lorsoth111/menu/popular_items.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppDashboard extends StatefulWidget {
   const AppDashboard({super.key});
@@ -19,6 +20,35 @@ class AppDashboard extends StatefulWidget {
 }
 
 class _AppDashboardState extends State<AppDashboard> {
+  String? fullname;
+
+  Future<void> loadData() async {
+    final sp = await SharedPreferences.getInstance();
+    setState(() {
+      fullname = sp.getString("FULLNAME");
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  String msggreeting() {
+    var msg = " ";
+    DateTime now = DateTime.now();
+    int hours = now.hour;
+    if (hours >= 12 && hours <= 16) {
+      msg = "Good Afternoon!";
+    } else if (hours > 16 && hours < 24) {
+      msg = "Good Evening!";
+    } else {
+      msg = "Good Morning!";
+    }
+    return msg;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,35 +61,33 @@ class _AppDashboardState extends State<AppDashboard> {
                 value: 1,
                 child: ListTile(
                   leading: Icon(Icons.add_shopping_cart),
-                  title: Text('New Order'),
+                  title: Text("New Order"),
                 ),
               ),
               PopupMenuItem(
                 value: 2,
                 child: ListTile(
                   leading: Icon(Icons.share),
-                  title: Text('Popular Items'),
+                  title: Text("Popular Items"),
                 ),
               ),
               PopupMenuItem(
                 value: 3,
                 child: ListTile(
-                  leading: Icon(Icons.favorite, color: AppColors.red),
-                  title: Text('Favorite Items'),
+                  leading: Icon(Icons.favorite, color: Colors.red),
+                  title: Text("Favorite Items"),
                 ),
               ),
             ],
             onSelected: (value) {
               switch (value) {
                 case 1:
-                  // go to New Order Screen
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const NewOrder()),
                   );
                   break;
                 case 2:
-                  // go to Popular Items Screen
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -68,13 +96,13 @@ class _AppDashboardState extends State<AppDashboard> {
                   );
                   break;
                 case 3:
-                  // go to Favorite Items Screen
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const FavoriteItems(),
                     ),
                   );
+                  break;
               }
             },
           ),
@@ -109,7 +137,7 @@ class _AppDashboardState extends State<AppDashboard> {
                         Container(
                           margin: EdgeInsets.all(10),
                           child: Text(
-                            'Good Afternoon!',
+                            msggreeting(),
                             style: TextStyle(
                               color: AppColors.bgColor,
                               fontSize: 16,
@@ -119,10 +147,10 @@ class _AppDashboardState extends State<AppDashboard> {
                         ),
                         Container(
                           margin: EdgeInsets.fromLTRB(10, 36, 10, 10),
-                          child: Text('BTB 111'),
+                          child: Text('$fullname'),
                         ),
                         Positioned(
-                          left: 10,
+                          left: 4,
                           bottom: 10,
                           child: Row(
                             children: <Widget>[
@@ -141,7 +169,7 @@ class _AppDashboardState extends State<AppDashboard> {
                                   style: TextStyle(color: AppColors.textColor),
                                 ),
                               ),
-                              SizedBox(width: 8),
+                              SizedBox(width: 5),
                               OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
@@ -158,14 +186,15 @@ class _AppDashboardState extends State<AppDashboard> {
                           ),
                         ),
                         Positioned(
-                          top: 10,
-                          right: 10,
+                          top: 0,
+                          right: 3,
+
                           bottom: 10,
                           child: CircleAvatar(
                             radius: 40,
-                            backgroundColor: AppColors.bgColor,
+                            backgroundColor: AppColors.white,
                             child: Padding(
-                              padding: EdgeInsetsGeometry.all(3),
+                              padding: EdgeInsetsGeometry.all(0),
                               child: ClipOval(
                                 child: Image.asset(
                                   'assets/images/kv1.jpg',
